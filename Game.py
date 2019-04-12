@@ -22,9 +22,9 @@ def insertionSort(arr,win,color):
 	singleRect((j+1),win,arr,color)
 
 def singleRect(w,win,arr,color):
-    width = win.width/len(arr)
-    height = win.height/max(arr)
-  
+    width = win.width/float(len(arr))
+    height = win.height/float(max(arr))
+ 
     px = Point(w * width, win.height)
     py = Point((w+1)*width, win.height - arr[w]*height)	
 
@@ -41,8 +41,8 @@ def singleRect(w,win,arr,color):
     rect.draw(win)
 
 def sortFish(win,arr,color):
-    width = win.width/len(arr)
-    height = win.height/max(arr)
+    width = win.width/float(len(arr))
+    height = win.height/float(max(arr))
 
     bigrect = Rectangle(Point(0,win.height),Point(win.width,0))
     bigrect.setFill("Black")
@@ -52,16 +52,17 @@ def sortFish(win,arr,color):
 	singleRect(i,win,arr,color)
 
 def main():
-    win = GraphWin("My Circle", 800, 600)
+    win = GraphWin("Sort", 800, 600)
     win.setBackground("black");		
 
     arr = range(5,100)
-    print(arr)
+   # print(arr)
     random.shuffle(arr)
-    print(arr)
+   # print(arr)
 
     sortFish(win,arr,"Red")
     insertionSort(arr,win,"Red")
+
     win.getMouse() # Pause to view result
     win.close()    # Close window when done
 
