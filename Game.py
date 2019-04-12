@@ -32,6 +32,10 @@ def singleRect(w,win,arr,color):
     clearRect.setFill("Black")    
     clearRect.draw(win)
 
+    greenrect = Rectangle(px,py)
+    greenrect.setFill("Green")
+    greenrect.draw(win)
+ 
     rect = Rectangle(px,py)
     rect.setFill(color)
     rect.draw(win)
