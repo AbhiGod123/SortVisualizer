@@ -1,27 +1,51 @@
 from graphics import *
 import random
 
-def insertionSort(arr,win,color): 
-      
-    # Traverse through 1 to len(arr) 
-    for i in range(1, len(arr)): 
+def partition(arr,low,high): 
+    i = ( low-1 )         # index of smaller element 
+    pivot = arr[high]     # pivot 
   
+    for j in range(low , high): 
+        if   arr[j] <= pivot: 
+            i = i+1 
+            arr[i],arr[j] = arr[j],arr[i]
+            singleRect(i)
+            singleRect(j)
+  
+    arr[i+1],arr[high] = arr[high],arr[i+1] 
+    singleRect(i+1)
+    singleRect(high)
+    return ( i+1 ) 
+  
+# Function to do Quick sort 
+def quickSort(arr,low,high): 
+    if low < high: 
+  
+        # pi is partitioning index, arr[p] is now 
+        # at right place 
+        pi = partition(arr,low,high) 
+  
+        # Separately sort elements before 
+        # partition and after partition 
+        quickSort(arr, low, pi-1) 
+        quickSort(arr, pi+1, high) 
+
+def insertionSort(arr):
+    # Traverse through 1 to len(arr) 
+    for i in range(1, len(arr)):
         key = arr[i]
-
-        # Move elements of arr[0..i-1], that are 
-        # greater than key, to one position ahead 
-        # of their current position 
+		
         j = i-1
-        while j >= 0 and key < arr[j]: 
-                arr[j + 1] = arr[j] 	
-		w = j + 1
-
-		singleRect(w,win,arr,color)
-                j -= 1
+        while j >= 0 and key < arr[j]:
+            arr[j + 1] = arr[j]
+            w = j + 1
+            j -= 1
+            singleRect(w)
         arr[j + 1] = key
-	singleRect((j+1),win,arr,color)
+        w = j + 1
+        singleRect(w)
 
-def singleRect(w,win,arr,color):
+def singleRect(w):
     width = win.width/float(len(arr))
     height = win.height/float(max(arr))
  
@@ -40,7 +64,7 @@ def singleRect(w,win,arr,color):
     rect.setFill(color)
     rect.draw(win)
 
-def sortFish(win,arr,color):
+def sortFish():
     width = win.width/float(len(arr))
     height = win.height/float(max(arr))
 
@@ -49,22 +73,21 @@ def sortFish(win,arr,color):
     bigrect.draw(win)
 
     for i in range(len(arr)):
-	singleRect(i,win,arr,color)
+        singleRect(i)
+		
+win = GraphWin("Sort", 600, 600)
+win.setBackground("black");		
 
-def main():
-    win = GraphWin("Sort", 800, 600)
-    win.setBackground("black");		
+arr = list(range(5,100))
+# print(arr)
+random.shuffle(arr)
 
-    arr = range(5,100)
-   # print(arr)
-    random.shuffle(arr)
-   # print(arr)
+color = "Red"
 
-    sortFish(win,arr,"Red")
-    insertionSort(arr,win,"Red")
+sortFish()
+#insertionSort(arr)
+quickSort(arr,0,len(arr)-1)
 
-    win.getMouse() # Pause to view result
-    win.close()    # Close window when done
-
-main()
-
+win.getMouse() # Pause to view result
+win.close()    # Close window when done
+		
